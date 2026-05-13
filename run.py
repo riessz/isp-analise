@@ -6,6 +6,7 @@ import pandas as pd
 
 from pipeline import (
     ARQUIVO_PADRAO,
+    PROCESSED_DIR,
     carregar_dados,
     limpar_dados,
     gerar_metricas,
@@ -40,8 +41,16 @@ def main(caminho_csv: str | Path) -> dict[str, pd.DataFrame]:
         log.exception("Erro inesperado no pipeline: %s", e)
         raise
 
+    _salvar_processados(df_limpo, df_metricas)
     log.info("=== Pipeline concluído com sucesso ===")
     return resultado
+
+
+def _salvar_processados(df_limpo: pd.DataFrame, df_metricas: pd.DataFrame) -> None:
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    df_limpo.to_csv(PROCESSED_DIR / "dados_limpos.csv", index=False)
+    df_metricas.to_csv(PROCESSED_DIR / "dados_metricas.csv", index=False)
+    log.info("Dados salvos em %s", PROCESSED_DIR)
 
 
 def _inspecionar(dados: dict[str, pd.DataFrame]) -> None:
