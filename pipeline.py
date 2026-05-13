@@ -46,6 +46,11 @@ COLUNAS_ROUBO = ["roubo_veiculo", "roubo_celular", "roubo_transeunte", "total_ro
 # Grupo 3 — Drogas
 COLUNAS_DROGAS = ["posse_drogas", "trafico_drogas"]
 
+# Grupo 4 — Furtos
+COLUNAS_FURTO = ["furto_celular", "furto_transeunte"]
+
+COLUNAS_CRIME = COLUNAS_VIOLENCIA + COLUNAS_ROUBO + COLUNAS_DROGAS + COLUNAS_FURTO
+
 # =============================================================================
 # 1. CARREGAMENTO
 # =============================================================================
@@ -234,7 +239,7 @@ def preparar_visualizacao(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
 
 
 # =============================================================================
-# 6. [FUTURO] PREVISÃO COM REGRESSÃO LINEAR
+# 6. PREVISÃO COM REGRESSÃO LINEAR
 # =============================================================================
 
 def prever_tendencia(
