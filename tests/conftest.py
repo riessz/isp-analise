@@ -16,6 +16,8 @@ _CSV_CONTEUDO = (
 )
 
 
+# Fixtures: criam dados para ser usados nos testes, sem precisar repetir o código de criação em cada um.
+
 @pytest.fixture
 def csv_valido(tmp_path):
     arquivo = tmp_path / "dados.csv"

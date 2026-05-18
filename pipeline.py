@@ -3,7 +3,6 @@
 Inteligência Territorial e Segurança Pública — Rio de Janeiro
 =============================================================================
 Autor  : Arthur Riess Cunha
-Versão : 0.1.0
 Fonte  : ISP-RJ (https://www.ispdados.rj.gov.br)
 
 Fluxo principal:
@@ -12,8 +11,7 @@ Fluxo principal:
         → limpar_dados()
         → gerar_metricas()
         → analise_temporal()
-        → preparar_visualizacao()
-        → [FUTURO] prever_tendencia()
+        → prever_tendencia()
         → DataFrames prontos para Streamlit / Plotly
 =============================================================================
 """
@@ -123,8 +121,9 @@ def limpar_dados(df, colunas_crime=None):
 # Foram geradas 3 métricas para fins de análise:
 # Taxa por 100k habitantes, média móvel de 3 meses e variação percentual mês a mês.
 
-#População estimada por AISP, baseada em dados do ISP-RJ e IBGE.
+# População estimada por AISP, baseada em dados do ISP-RJ e IBGE.
 # AISP são áreas de segurança pública, cada uma cobrindo vários municípios. 
+# Obs: AISPs 8, 12 e 13 foram desmembradas e não possuem população própria atualmente.
 
 POPULACAO_AISP = {
     "1":  232000,  "2":  340000,  "3":  250000,  "4":  214000,
@@ -196,50 +195,7 @@ def analise_temporal(
 
 
 # =============================================================================
-# 5. PREPARAÇÃO PARA VISUALIZAÇÃO
-# =============================================================================
-
-def preparar_visualizacao(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
-    heatmap = df.pivot_table(
-        index="aisp",
-        columns="mes_ano",
-        values="taxa_100k",
-        aggfunc="sum",
-        fill_value=0,
-    )
-
-    mes_mais_recente = df["mes_ano"].max()
-    ranking = (
-        df[df["mes_ano"] == mes_mais_recente]
-        .groupby("aisp")["qtd_ocorrencias"]
-        .sum()
-        .nlargest(10)
-        .reset_index()
-        .rename(columns={"qtd_ocorrencias": "total_ocorrencias"})
-    )
-
-    series = analise_temporal(df)
-
-    por_tipo = (
-        df.groupby("tipo_crime")["qtd_ocorrencias"]
-        .sum()
-        .reset_index()
-        .rename(columns={"qtd_ocorrencias": "total_ocorrencias"})
-        .sort_values("total_ocorrencias", ascending=False)
-    )
-
-    resultado = {
-        "heatmap":  heatmap,
-        "ranking":  ranking,
-        "series":   series,
-        "por_tipo": por_tipo,
-    }
-    log.info("Visualizacao preparada. Chaves: %s", list(resultado.keys()))
-    return resultado
-
-
-# =============================================================================
-# 6. PREVISÃO COM REGRESSÃO LINEAR
+# 5. PREVISÃO COM REGRESSÃO LINEAR
 # =============================================================================
 
 def prever_tendencia(

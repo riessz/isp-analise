@@ -40,8 +40,7 @@ CSV bruto
   → limpar_dados()          # normalização, parsing de datas, melt para formato longo
   → gerar_metricas()        # taxa por 100k hab., média móvel 3 meses, variação %
   → analise_temporal()      # série temporal agregada por crime/AISP
-  → preparar_visualizacao() # heatmap, ranking, série, distribuição por tipo
-  → prever_tendencia()  # regressão linear com intervalo de confiança
+  → prever_tendencia()      # regressão linear com intervalo de confiança
 ```
 
 ## Grupos de crimes analisados
@@ -53,7 +52,7 @@ CSV bruto
 | Drogas    | `posse_drogas`, `trafico_drogas`                                     |
 | Furto     | `furto_celular`, `furto_transeunte`                                  |
 
-> **Atenção:** `total_roubos` inclui modalidades além das três listadas (roubo a banco, carga etc.). Combiná-lo com os tipos individuais gera dupla contagem — o dashboard exibe um aviso automático nesse caso.
+> **Atenção:** `total_roubos` inclui modalidades além das três listadas (roubo a banco, carga etc.). Combiná-lo com os tipos individuais gera dupla contagem, o dashboard exibe um aviso automático nesse caso.
 
 ## Instalação
 
@@ -114,7 +113,7 @@ jupyter notebook
 pytest tests/ -v
 ```
 
-32 testes cobrindo todas as funções do pipeline (`carregar_dados`, `limpar_dados`, `gerar_metricas`, `analise_temporal`, `preparar_visualizacao`, `prever_tendencia`).
+27 testes cobrindo todas as funções do pipeline (`carregar_dados`, `limpar_dados`, `gerar_metricas`, `analise_temporal`, `prever_tendencia`).
 
 ## Requisitos
 

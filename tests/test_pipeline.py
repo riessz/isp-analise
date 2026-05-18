@@ -7,16 +7,13 @@ from pipeline import (
     limpar_dados,
     gerar_metricas,
     analise_temporal,
-    preparar_visualizacao,
     prever_tendencia,
     COLUNAS_ID,
     COLUNAS_VIOLENCIA,
 )
 
 
-# =============================================================================
 # carregar_dados
-# =============================================================================
 
 class TestCarregarDados:
     def test_retorna_dataframe(self, csv_valido):
@@ -43,9 +40,7 @@ class TestCarregarDados:
             carregar_dados(vazio)
 
 
-# =============================================================================
 # limpar_dados
-# =============================================================================
 
 class TestLimparDados:
     def test_mes_ano_e_period(self, df_limpo):
@@ -76,9 +71,7 @@ class TestLimparDados:
         assert list(df_bruto.columns) == colunas_antes
 
 
-# =============================================================================
 # gerar_metricas
-# =============================================================================
 
 class TestGerarMetricas:
     def test_colunas_de_metricas_criadas(self, df_metricas):
@@ -104,9 +97,7 @@ class TestGerarMetricas:
         assert list(df_limpo.columns) == colunas_antes
 
 
-# =============================================================================
 # analise_temporal
-# =============================================================================
 
 class TestAnaliseTemporal:
     def test_retorna_dataframe_com_colunas_esperadas(self, df_metricas):
@@ -132,37 +123,7 @@ class TestAnaliseTemporal:
         assert len(serie) == 0
 
 
-# =============================================================================
-# preparar_visualizacao
-# =============================================================================
-
-class TestPrepararVisualizacao:
-    def test_retorna_dict_com_todas_chaves(self, df_metricas):
-        resultado = preparar_visualizacao(df_metricas)
-        assert set(resultado.keys()) == {"heatmap", "ranking", "series", "por_tipo"}
-
-    def test_heatmap_e_dataframe_com_aisp_no_index(self, df_metricas):
-        heatmap = preparar_visualizacao(df_metricas)["heatmap"]
-        assert isinstance(heatmap, pd.DataFrame)
-        assert heatmap.index.name == "aisp"
-
-    def test_ranking_tem_colunas_esperadas(self, df_metricas):
-        ranking = preparar_visualizacao(df_metricas)["ranking"]
-        assert "aisp" in ranking.columns
-        assert "total_ocorrencias" in ranking.columns
-
-    def test_por_tipo_soma_positiva(self, df_metricas):
-        por_tipo = preparar_visualizacao(df_metricas)["por_tipo"]
-        assert (por_tipo["total_ocorrencias"] > 0).all()
-
-    def test_series_ordenada_por_periodo(self, df_metricas):
-        series = preparar_visualizacao(df_metricas)["series"]
-        assert list(series.index) == sorted(series.index)
-
-
-# =============================================================================
 # prever_tendencia
-# =============================================================================
 
 class TestPreverTendencia:
     @pytest.fixture

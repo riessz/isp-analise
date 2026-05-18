@@ -86,6 +86,7 @@ AISP_REGIOES = {
     43: "Duque de Caxias - Desmembramento (15º BPM)",
 }
 
+# Serve para carregar e processar os dados uma única vez, e depois usar o resultado em toda a aplicação sem recarregar ou recalcular.
 
 @st.cache_data
 def carregar_pipeline() -> pd.DataFrame:
@@ -102,9 +103,7 @@ aisps_ord = sorted(df_raw["aisp"].unique(), key=int)
 tipos_ord = sorted(df_raw["tipo_crime"].unique())
 anos_ord  = sorted(df_raw["ano"].unique())
 
-# =============================================================================
 # SIDEBAR
-# =============================================================================
 
 with st.sidebar:
     st.title("Filtros")
@@ -158,9 +157,7 @@ with st.sidebar:
         label_visibility="collapsed",
     )
 
-# =============================================================================
 # FILTROS
-# =============================================================================
 
 aisps_ativos = aisps_sel or aisps_ord
 tipos_ativos = tipos_sel or tipos_do_grupo
@@ -171,9 +168,7 @@ df = df_raw[
     & df_raw["ano"].between(ano_ini, ano_fim)
 ].copy()
 
-# =============================================================================
 # PÁGINA
-# =============================================================================
 
 st.title("Segurança Pública — Rio de Janeiro")
 
@@ -189,9 +184,7 @@ if "total_roubos" in tipos_ativos and _individuais_roubo & set(tipos_ativos):
         "Desmarque os tipos individuais ou o total para evitar contagem duplicada."
     )
 
-# =============================================================================
 # SÉRIE TEMPORAL
-# =============================================================================
 
 col_titulo, col_toggle = st.columns([5, 2])
 with col_titulo:
@@ -225,8 +218,10 @@ fig = px.line(
     labels={"mes_str": "Mês", y_col: label_y},
     color_discrete_sequence=[cor],
 )
-if usar_media:
-    fig.update_traces(line_dash="dash")
+fig.update_traces(
+    hovertemplate=f"{label_y}: %{{y:,.0f}}<extra></extra>",
+    **({"line_dash": "dash"} if usar_media else {}),
+)
 
 fig.update_layout(
     xaxis_tickangle=-45,
@@ -239,6 +234,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Métricas de resumo
 # Total e média sempre refletem os dados reais; pico e mês do pico seguem o toggle
+
 total_real = int(serie["qtd_ocorrencias"].sum())
 media_real = serie["qtd_ocorrencias"].mean()
 pico       = serie[y_col].max()
