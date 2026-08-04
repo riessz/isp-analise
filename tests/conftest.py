@@ -1,6 +1,6 @@
 import pytest
-from pipeline import carregar_dados, limpar_dados, gerar_metricas
 
+from pipeline import carregar_dados, gerar_metricas, limpar_dados
 
 _CSV_CONTEUDO = (
     "cisp;mes_ano;aisp;risp;munic;regiao;"

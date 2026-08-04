@@ -1,5 +1,7 @@
 # Inteligência Territorial e Segurança Pública — Rio de Janeiro
 
+![CI](https://github.com/riessz/isp-analise/actions/workflows/ci.yml/badge.svg)
+
 Análise de dados de criminalidade do estado do Rio de Janeiro a partir dos registros mensais por CISP (Circunscrição de Segurança Pública) disponibilizados pelo ISP-RJ.
 
 ## Fonte de dados

@@ -1,6 +1,6 @@
-from pathlib import Path
 import logging
 import sys
+from pathlib import Path
 
 import pandas as pd
 
@@ -8,8 +8,8 @@ from pipeline import (
     ARQUIVO_PADRAO,
     PROCESSED_DIR,
     carregar_dados,
-    limpar_dados,
     gerar_metricas,
+    limpar_dados,
 )
 
 logging.basicConfig(
@@ -35,8 +35,8 @@ def main(caminho_csv: str | Path) -> None:
         log.error("Pipeline interrompido: %s", e)
         raise
 
-    except Exception as e:
-        log.exception("Erro inesperado no pipeline: %s", e)
+    except Exception:
+        log.exception("Erro inesperado no pipeline")
         raise
 
     _salvar_processados(df_limpo, df_metricas)

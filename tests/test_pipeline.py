@@ -1,17 +1,16 @@
-import pytest
+
 import pandas as pd
-from pathlib import Path
+import pytest
 
 from pipeline import (
-    carregar_dados,
-    limpar_dados,
-    gerar_metricas,
-    analise_temporal,
-    prever_tendencia,
     COLUNAS_ID,
     COLUNAS_VIOLENCIA,
+    analise_temporal,
+    carregar_dados,
+    gerar_metricas,
+    limpar_dados,
+    prever_tendencia,
 )
-
 
 # carregar_dados
 

@@ -1,10 +1,16 @@
-import streamlit as st
 import pandas as pd
 import plotly.express as px
+import streamlit as st
 
 from pipeline import (
-    ARQUIVO_PADRAO, carregar_dados, limpar_dados, gerar_metricas,
-    COLUNAS_VIOLENCIA, COLUNAS_ROUBO, COLUNAS_DROGAS, COLUNAS_FURTO,
+    ARQUIVO_PADRAO,
+    COLUNAS_DROGAS,
+    COLUNAS_FURTO,
+    COLUNAS_ROUBO,
+    COLUNAS_VIOLENCIA,
+    carregar_dados,
+    gerar_metricas,
+    limpar_dados,
 )
 
 st.set_page_config(
@@ -228,7 +234,7 @@ fig.update_layout(
     hovermode="x unified",
     height=430,
     showlegend=False,
-    margin=dict(l=0, r=10, t=30, b=0),
+    margin={"l": 0, "r": 10, "t": 30, "b": 0},
 )
 st.plotly_chart(fig, use_container_width=True)
 

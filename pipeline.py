@@ -16,12 +16,13 @@ Fluxo principal:
 =============================================================================
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
 import logging
-from sklearn.linear_model import LinearRegression
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 from scipy import stats
+from sklearn.linear_model import LinearRegression
 
 log = logging.getLogger(__name__)
 
