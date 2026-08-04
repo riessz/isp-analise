@@ -1,6 +1,7 @@
 # Inteligência Territorial e Segurança Pública — Rio de Janeiro
 
 ![CI](https://github.com/riessz/isp-analise/actions/workflows/ci.yml/badge.svg)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://publicsecurityrj.streamlit.app/)
 
 Análise de dados de criminalidade do estado do Rio de Janeiro a partir dos registros mensais por CISP (Circunscrição de Segurança Pública) disponibilizados pelo ISP-RJ.
 
@@ -71,7 +72,9 @@ pip install -r requirements.txt
 
 ## Uso
 
-**Dashboard interativo (Streamlit):**
+**Demo online:** [publicsecurityrj.streamlit.app](https://publicsecurityrj.streamlit.app/)
+
+**Dashboard interativo (Streamlit, local):**
 
 ```bash
 streamlit run app.py
